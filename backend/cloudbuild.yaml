@@ -1,0 +1,22 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA', '.']
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA']
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'notex-backend' # Your service name
+      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
+      - '--region=us-central1'
+      - '--platform=managed'
+      - '--allow-unauthenticated' # Allow public access to the API
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
