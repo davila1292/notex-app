@@ -1,13 +1,65 @@
 const express = require('express');
-const path = require('path');
+const bodyParser = require('body-parser');
+const cors = require('cors'); // Import the cors package
+const { Datastore } = require('@google-cloud/datastore');
+
 const app = express();
 
-// Serve static files from the current directory
-app.use(express.static(__dirname));
+// Enable CORS for all routes. This is the line that fixes the issue.
+app.use(cors());
 
-// The PORT environment variable is provided by Cloud Run
-const port = process.env.PORT || 8080;
+app.use(bodyParser.json());
 
-app.listen(port, () => {
-  console.log(`Frontend server listening on port ${port}`);
+const datastore = new Datastore();
+const KIND = 'Note';
+
+// --- API Routes ---
+
+// Get all notes
+app.get('/notes', async (req, res) => {
+    const query = datastore.createQuery(KIND).order('createdAt', { descending: true });
+    const [notes] = await datastore.runQuery(query);
+    // Map the Datastore-specific ID to a more generic 'id' field
+    const results = notes.map(note => {
+        const noteKey = note[datastore.KEY];
+        return { ...note, id: noteKey.id || noteKey.name };
+    });
+    res.json(results);
 });
+
+// Add a new note
+app.post('/notes', async (req, res) => {
+    const { title, description } = req.body;
+    if (!title || !description) {
+        return res.status(400).send('Title and description are required.');
+    }
+
+    const note = {
+        key: datastore.key(KIND),
+        data: {
+            title,
+            description,
+            createdAt: new Date(),
+        },
+    };
+
+    await datastore.save(note);
+    res.status(201).send('Note created.');
+});
+
+// Delete a note
+app.delete('/notes/:id', async (req, res) => {
+    const { id } = req.params;
+    // Datastore IDs are numbers, so we need to parse it
+    const noteKey = datastore.key([KIND, parseInt(id, 10)]);
+    await datastore.delete(noteKey);
+    res.status(204).send(); // 204 No Content is standard for a successful delete
+});
+
+// --- Server Start ---
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Backend server listening on port ${port}`);
+});
+
