@@ -5,8 +5,16 @@ const cors = require('cors');
 const app = express();
 const firestore = new Firestore();
 
+// --- CORS Configuration ---
+// It's a security best practice to explicitly whitelist the origins that can
+// access your API, rather than allowing all origins with a wildcard (*).
+const corsOptions = {
+  origin: 'https://8080-cs-1027490199430-default.cs-us-east1-rtep.cloudshell.dev',
+  optionsSuccessStatus: 200 // For legacy browser support
+};
+
 // Middleware
-app.use(cors()); // Enable CORS for all origins (for development, restrict in production)
+app.use(cors(corsOptions)); // Enable CORS with specific options
 app.use(express.json()); // Parse JSON request bodies
 
 // Collection reference
