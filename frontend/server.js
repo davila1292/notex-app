@@ -6,7 +6,10 @@ const { Datastore } = require('@google-cloud/datastore');
 const app = express();
 
 // Define allowed origins
-const allowedOrigins = ['https://notex-frontend-338461806804.us-central1.run.app'];
+const allowedOrigins = [
+  'http://localhost:8081', // For local development frontend
+  'https://notex-frontend-338461806804.us-central1.run.app'
+];
 const corsOptions = {
   origin: allowedOrigins
 };
@@ -63,7 +66,7 @@ app.delete('/notes/:id', async (req, res) => {
 
 // --- Server Start ---
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`Backend server listening on port ${port}`);
 });

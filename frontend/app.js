@@ -1,6 +1,6 @@
 // --- IMPORTANT ---
 // For local development, we'll use the local backend server
-const API_URL = 'http://localhost:8081';
+const API_URL = 'http://localhost:8080';
 
 const notesContainer = document.getElementById('notes-container');
 const noteForm = document.getElementById('note-form');
