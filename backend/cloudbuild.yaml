@@ -1,27 +1,39 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    dir: 'backend' # Run this step in the 'backend' directory
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA', '.']
+    id: 'Build'
+    dir: 'backend' # The Dockerfile is in the 'backend' directory
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
+      - '.'
 
   # Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    dir: 'backend' # Run this step in the 'backend' directory
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA']
+    id: 'Push'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
 
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy to Cloud Run'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
       - 'notex-backend' # Your service name
-      - '--image=us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
-      - '--region=us-central1'
-      - '--platform=managed'
-      - '--allow-unauthenticated' # Allow public access to the API
-    dir: 'backend' # Run this step in the 'backend' directory
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated' # Allows public access to the API
+
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
+
 options:
   logging: CLOUD_LOGGING_ONLY

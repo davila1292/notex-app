@@ -7,9 +7,11 @@ const firestore = new Firestore();
 
 // --- CORS Configuration ---
 // It's a security best practice to explicitly whitelist the origins that can
-// access your API, rather than allowing all origins with a wildcard (*).
+// access your API. We use an environment variable for the frontend URL.
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:3000';
+
 const corsOptions = {
-  origin: 'https://8080-cs-1027490199430-default.cs-us-east1-rtep.cloudshell.dev',
+  origin: allowedOrigin,
   optionsSuccessStatus: 200 // For legacy browser support
 };
 
