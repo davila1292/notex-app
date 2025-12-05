@@ -7,7 +7,7 @@ const app = express();
 
 // Define allowed origins
 const allowedOrigins = [
-  'http://localhost:8081', // For local development frontend
+  'http://localhost:8080', // For local development frontend
   'https://notex-frontend-338461806804.us-central1.run.app'
 ];
 const corsOptions = {

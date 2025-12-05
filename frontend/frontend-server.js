@@ -10,7 +10,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`Frontend server listening on port ${port}`);
 });
