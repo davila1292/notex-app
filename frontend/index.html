@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoteX - Your Simple Notes App</title>
+    <title>NoteX App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>NoteX</h1>
-            <p>Your Simple Notes App</p>
-        </header>
-        <main>
-            <form id="note-form">
-                <input type="text" id="note-title" placeholder="Note Title" required>
-                <textarea id="note-description" placeholder="Note Description" rows="4" required></textarea>
-                <button type="submit">Add Note</button>
-            </form>
-            <section id="notes-container" aria-live="polite">
+        <h1>NoteX</h1>
+        <div id="error-message" class="error"></div>
+        <form id="note-form">
+            <input type="text" id="note-title" placeholder="Note Title" required>
+            <textarea id="note-description" placeholder="Note Description" required></textarea>
+            <button type="submit">Add Note</button>
+        </form>
+        <div class="notes-container">
+            <h2>Your Notes</h2>
+            <ul id="notes-list">
                 <!-- Notes will be dynamically inserted here -->
-            </section>
-        </main>
+            </ul>
+        </div>
     </div>
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
