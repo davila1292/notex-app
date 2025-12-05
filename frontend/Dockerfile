@@ -1,12 +1,22 @@
-# Use a lightweight Nginx image as the base
-FROM nginx:alpine
+# Use an official Node.js runtime as a parent image.
+# Using a slim version for a smaller final image size.
+FROM node:18-slim
 
-# Copy your static website files (HTML, CSS, JS) into the default Nginx public directory
-COPY . /usr/share/nginx/html
+# Set the working directory in the container.
+WORKDIR /usr/src/app
 
-# Tell Google Cloud that the container will listen on port 80
-EXPOSE 80
+# Copy package.json and package-lock.json to the working directory.
+# This is done first to leverage Docker's layer caching.
+COPY package*.json ./
 
-# The default command for the nginx image is to start the server.
-# This makes sure it runs in the foreground, which is required by Cloud Run.
-CMD ["nginx", "-g", "daemon off;"]
+# Install application dependencies.
+RUN npm install
+
+# Copy the rest of the application's source code.
+COPY . .
+
+# Make port 8080 available to the world outside this container.
+EXPOSE 8080
+
+# Define the command to run your app.
+CMD [ "npm", "start" ]
