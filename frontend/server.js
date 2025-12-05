@@ -8,7 +8,8 @@ const app = express();
 // Define allowed origins
 const allowedOrigins = [
   'http://localhost:8081', // For local development frontend
-  'https://notex-frontend-338461806804.us-central1.run.app'
+  'https://notex-frontend-338461806804.us-central1.run.app',
+  'https://8081-cs-1027490199430-default.cs-us-east1-rtep.cloudshell.dev' // For Cloud Shell preview
 ];
 const corsOptions = {
   origin: allowedOrigins
