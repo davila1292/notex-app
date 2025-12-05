@@ -33,6 +33,11 @@ const KIND = 'Note';
 
 // --- API Routes ---
 
+// Root endpoint to confirm the API is running
+app.get('/', (req, res) => {
+    res.status(200).send('NoteX Backend API is running.');
+});
+
 // Get all notes
 app.get('/notes', async (req, res) => {
     const query = datastore.createQuery(KIND).order('createdAt', { descending: true });
