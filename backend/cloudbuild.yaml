@@ -20,3 +20,5 @@ steps:
       - '--allow-unauthenticated' # Allow public access to the API
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
