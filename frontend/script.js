@@ -1,5 +1,6 @@
 // IMPORTANT: Replace this with your actual Cloud Run backend URL
-const API_URL = 'https://notex-backend-ze5vpdmr4q-uc.a.run.app';
+
+const API_URL = 'https://notex-backend-338461806804.us-central1.run.app';
 
 const noteForm = document.getElementById('note-form');
 const notesList = document.getElementById('notes-list');
