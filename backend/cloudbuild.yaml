@@ -2,7 +2,7 @@ steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
     dir: 'backend' # Run this step in the 'backend' directory
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA', '..']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/notex-repo/notex-backend:$COMMIT_SHA', '.']
 
   # Push the container image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
