@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import the cors package
 const { Datastore } = require('@google-cloud/datastore');
+const path = require('path');
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.use(bodyParser.json());
 
 const datastore = new Datastore();
 const KIND = 'Note';
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // --- API Routes ---
 
@@ -59,6 +63,11 @@ app.delete('/notes/:id', async (req, res) => {
     const noteKey = datastore.key([KIND, parseInt(id, 10)]);
     await datastore.delete(noteKey);
     res.status(204).send(); // 204 No Content is standard for a successful delete
+});
+
+// Fallback to serve index.html for any other requests
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // --- Server Start ---
