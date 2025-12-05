@@ -88,8 +88,11 @@ app.put('/notes/:id', async (req, res) => {
     if (title) updateData.title = title;
     if (description) updateData.description = description;
 
-    await notesCollection.doc(req.params.id).update(updateData);
-    res.status(200).send('Note updated successfully.');
+    const noteRef = notesCollection.doc(req.params.id);
+    await noteRef.update(updateData);
+
+    const updatedDoc = await noteRef.get();
+    res.status(200).json({ id: updatedDoc.id, ...updatedDoc.data() });
   } catch (error) {
     console.error('Error updating note:', error);
     res.status(500).send('Error updating note.');
