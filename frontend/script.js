@@ -72,8 +72,13 @@ async function handleDelete(event) {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
-    if (!API_URL.includes('xxxxxxxxxx')) {
+    // A simple check to ensure the API_URL has been changed from a placeholder
+    // and looks like a real URL before making a network request.
+    if (API_URL && API_URL.startsWith('https')) {
         fetchNotes();
+    } else {
+        console.error("API_URL is not configured. Please edit script.js and set the backend URL.");
+        errorMessage.textContent = 'Frontend is not configured to connect to the backend API.';
     }
     noteForm.addEventListener('submit', addNote);
     notesList.addEventListener('click', handleDelete);
