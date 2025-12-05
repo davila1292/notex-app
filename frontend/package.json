@@ -1,0 +1,12 @@
+{
+  "name": "notex-frontend",
+  "version": "1.0.0",
+  "description": "Static file server for Notex frontend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
