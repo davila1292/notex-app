@@ -29,7 +29,7 @@ function displayNotes(notes) {
                 <strong>${note.title}</strong>
                 <p>${note.description}</p>
             </div>
-            <button onclick="deleteNote('${note.id}')">Delete</button>
+            <button class="delete-btn" data-id="${note.id}">Delete</button>
         `;
         notesList.appendChild(li);
     });
@@ -55,12 +55,14 @@ async function addNote(event) {
     }
 }
 
-async function deleteNote(id) {
+async function handleDelete(event) {
+    if (!event.target.classList.contains('delete-btn')) return;
+    const id = event.target.dataset.id;
     try {
         const response = await fetch(`${API_URL}/notes/${id}`, {
             method: 'DELETE',
         });
-        if (!response.ok) throw new Error('Failed to delete note');
+        if (!response.ok && response.status !== 204) throw new Error('Failed to delete note');
         fetchNotes(); // Refresh the list
     } catch (error) {
         console.error('Failed to delete note:', error);
@@ -74,4 +76,5 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchNotes();
     }
     noteForm.addEventListener('submit', addNote);
+    notesList.addEventListener('click', handleDelete);
 });
