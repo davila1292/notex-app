@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteX - Your Simple Notes App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NoteX</h1>
+            <p>Your Simple Notes App</p>
+        </header>
+        <main>
+            <form id="note-form">
+                <input type="text" id="note-title" placeholder="Note Title" required>
+                <textarea id="note-description" placeholder="Note Description" rows="4" required></textarea>
+                <button type="submit">Add Note</button>
+            </form>
+            <section id="notes-container" aria-live="polite">
+                <!-- Notes will be dynamically inserted here -->
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
