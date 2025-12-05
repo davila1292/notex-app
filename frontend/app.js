@@ -1,6 +1,6 @@
 // --- IMPORTANT ---
-// TODO: Replace this placeholder with the URL of your deployed Cloud Run service
-const API_URL = 'https://notex-backend-338461806804.us-central1.run.app';
+// For local development, we'll use the local backend server
+const API_URL = 'http://localhost:8081';
 
 const notesContainer = document.getElementById('notes-container');
 const noteForm = document.getElementById('note-form');
