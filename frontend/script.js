@@ -24,13 +24,22 @@ function displayNotes(notes) {
     notes.forEach(note => {
         const li = document.createElement('li');
         li.className = 'note-item';
-        li.innerHTML = `
-            <div>
-                <strong>${note.title}</strong>
-                <p>${note.description}</p>
-            </div>
-            <button class="delete-btn" data-id="${note.id}">Delete</button>
-        `;
+
+        const contentDiv = document.createElement('div');
+        const strong = document.createElement('strong');
+        strong.textContent = note.title; // Safely sets text
+        const p = document.createElement('p');
+        p.textContent = note.description; // Safely sets text
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-btn';
+        deleteButton.dataset.id = note.id;
+        deleteButton.textContent = 'Delete';
+
+        contentDiv.appendChild(strong);
+        contentDiv.appendChild(p);
+        li.appendChild(contentDiv);
+        li.appendChild(deleteButton);
         notesList.appendChild(li);
     });
 }
