@@ -87,9 +87,8 @@ async function handleDelete(event) {
 
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
-    // A simple check to ensure the API_URL has been changed from a placeholder
-    // and looks like a real URL before making a network request.
-    if (API_URL && API_URL.startsWith('https')) {
+    // Check if the API_URL is a valid http or https URL before making a network request.
+    if (API_URL && (API_URL.startsWith('http://') || API_URL.startsWith('https://'))) {
         fetchNotes();
     } else {
         console.error("API_URL is not configured. Please edit script.js and set the backend URL.");
