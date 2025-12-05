@@ -63,7 +63,7 @@ app.delete('/notes/:id', async (req, res) => {
 
 // --- Server Start ---
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 app.listen(port, () => {
     console.log(`Backend server listening on port ${port}`);
 });
