@@ -5,8 +5,13 @@ const { Datastore } = require('@google-cloud/datastore');
 
 const app = express();
 
-// Enable CORS for all routes. This is the line that fixes the issue.
-app.use(cors());
+// Define allowed origins
+const allowedOrigins = ['https://notex-frontend-338461806804.us-central1.run.app'];
+const corsOptions = {
+  origin: allowedOrigins
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 
@@ -62,4 +67,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`Backend server listening on port ${port}`);
 });
-
