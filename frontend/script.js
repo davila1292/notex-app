@@ -58,6 +58,12 @@ async function addNote(event) {
 async function handleDelete(event) {
     if (!event.target.classList.contains('delete-btn')) return;
     const id = event.target.dataset.id;
+    const deleteButton = event.target;
+
+    // Provide user feedback
+    deleteButton.textContent = 'Deleting...';
+    deleteButton.disabled = true;
+
     try {
         const response = await fetch(`${API_URL}/notes/${id}`, {
             method: 'DELETE',
