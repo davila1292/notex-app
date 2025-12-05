@@ -12,8 +12,16 @@ const allowedOrigins = [
   'https://8081-cs-1027490199430-default.cs-us-east1-rtep.cloudshell.dev', // For Cloud Shell preview
   'https://8080-cs-1027490199430-default.cs-us-east1-rtep.cloudshell.dev' // Allow requests from the backend's own preview URL
 ];
+
 const corsOptions = {
-  origin: allowedOrigins
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 };
 
 app.use(cors(corsOptions));
